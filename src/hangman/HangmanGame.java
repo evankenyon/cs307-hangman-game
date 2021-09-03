@@ -29,20 +29,15 @@ public class HangmanGame {
 
     // word that is being guessed
     private String mySecretWord;
-    // how many guesses are remaining
-    private int myNumGuessesLeft;
     // what is shown to the user
     private DisplayWord myDisplayWord;
-    // tracks letters guessed
-    private StringBuilder myLettersLeftToGuess;
-    // current player's guess
-    private String myGuess;
     // JFX variables
     private Scene myScene;
     private Timeline myAnimation;
     private Text myNumGuessesLeftDisplay;
     private List<Text> mySecretWordDisplay;
     private List<Text> myLettersLeftToGuessDisplay;
+    private Guesser guesser;
 
 
     /**
@@ -50,10 +45,9 @@ public class HangmanGame {
      * of the given length and giving the user the given number of chances.
      */
     public HangmanGame(HangmanDictionary dictionary, int wordLength, int numGuesses) {
-        myNumGuessesLeft = numGuesses;
-        myLettersLeftToGuess = new StringBuilder(ALPHABET);
         mySecretWord = dictionary.getRandomWord(wordLength).toLowerCase();
         myDisplayWord = new DisplayWord(mySecretWord);
+        guesser = new Guesser(numGuesses);
         // SHOULD NOT PUBLIC, but makes it easier to test
         System.out.println("*** " + mySecretWord);
     }
@@ -72,8 +66,6 @@ public class HangmanGame {
      * Create the game's "scene": what shapes will be in the game and their starting properties.
      */
     public Scene setupDisplay (int width, int height, Paint background) {
-
-        // create place to see and interact with the shapes
         myScene = new Scene(setupDisplays(width, height), width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
@@ -93,15 +85,12 @@ public class HangmanGame {
      * Play one round of the game.
      */
     public void playGuess () {
-        // has user guessed?
-        if (myGuess == null) {
+        if (guesser.getCurrGuess() == null) {
             return;
         }
-        // handle only valid guesses
-        if (myGuess.length() == 1 && ALPHABET.contains(myGuess)) {
-            int index = myLettersLeftToGuess.indexOf(myGuess);
-            // do not count repeated guess as a miss
-            if (myLettersLeftToGuess.indexOf(myGuess) < 0) {
+        if (guesser.isCurrGuessValid()) {
+            int index = guesser.getCurrGuessIndex();
+            if (index < 0) {
                 return;
             }
             handleRecordGuess(index);
@@ -109,22 +98,21 @@ public class HangmanGame {
         else {
             System.out.println("Please enter a single alphabetic letter ...");
         }
-        myGuess = null;
+        guesser.setCurrGuess(null);
 
         handleEndOfGame();
     }
 
     private void handleRecordGuess(int index) {
-        myLettersLeftToGuess.setCharAt(index, ' ');
+        guesser.handleLetterAtIndexGuessed(index);
         checkGuessInSecretWord();
-        // update letters displayed to the user
-        updateDisplay(myLettersLeftToGuess.toString(), myLettersLeftToGuessDisplay);
-        myNumGuessesLeftDisplay.setText(""+myNumGuessesLeft);
+        updateDisplay(guesser.getMyLettersLeftToGuess().toString(), myLettersLeftToGuessDisplay);
+        myNumGuessesLeftDisplay.setText(""+guesser.getNumGuessesLeft());
         updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
     }
 
     private void handleEndOfGame() {
-        if (myNumGuessesLeft == 0) {
+        if (guesser.getNumGuessesLeft() == 0) {
             handleEndOfGameCleanup("YOU ARE HUNG!");
         }
         else if (myDisplayWord.equals(mySecretWord)) {
@@ -134,9 +122,7 @@ public class HangmanGame {
 
     private void handleEndOfGameCleanup(String endGameMessage) {
         System.out.println(endGameMessage);
-        // stop responding to key events when game is over
         myScene.setOnKeyPressed(null);
-        // stop guessing when game is over
         myAnimation.stop();
     }
 
@@ -147,23 +133,20 @@ public class HangmanGame {
     }
 
     private void checkGuessInSecretWord() {
-        if (! mySecretWord.contains(myGuess)) {
-            myNumGuessesLeft -= 1;
+        if (! mySecretWord.contains(guesser.getCurrGuess())) {
+            guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
         } else {
-            myDisplayWord.update(myGuess.charAt(0), mySecretWord);
+            myDisplayWord.update(guesser.getCurrGuess().charAt(0), mySecretWord);
         }
     }
 
     private Group setupDisplays(int width, int height) {
-        // show letters available for guessing
         Group root = new Group();
         myLettersLeftToGuessDisplay = setupLetterDisplay(50, 50, 20, ALPHABET);
         root.getChildren().addAll(myLettersLeftToGuessDisplay);
-        // show "hanged man" simply as a number that counts down
-        myNumGuessesLeftDisplay = new Text(width/2 - 100, height/2 + 100, ""+myNumGuessesLeft);
+        myNumGuessesLeftDisplay = new Text(width/2 - 100, height/2 + 100, ""+guesser.getNumGuessesLeft());
         myNumGuessesLeftDisplay.setFont(Font.font("Verdana", FontWeight.BOLD, 300));
         root.getChildren().add(myNumGuessesLeftDisplay);
-        // show word being guessed, with letters hidden until they are guessed
         mySecretWordDisplay = setupLetterDisplay(200, 500, 40, myDisplayWord.toString());
         root.getChildren().addAll(mySecretWordDisplay);
         return root;
@@ -171,6 +154,6 @@ public class HangmanGame {
 
     // Record user's input to be used in the game loop
     private void handleKeyInput (KeyCode code) {
-        myGuess = code.getChar().toLowerCase();
+        guesser.setCurrGuess(code.getChar().toLowerCase());
     }
 }

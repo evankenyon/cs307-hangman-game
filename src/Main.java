@@ -1,3 +1,4 @@
+import hangman.HangmanGame;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -27,8 +28,8 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) {
-//        HangmanInteractiveGame game = new HangmanInteractiveGame(
-        HangmanAutoGame game = new HangmanAutoGame(
+        HangmanGame game = new HangmanGame(
+//        HangmanAutoGame game = new HangmanAutoGame(
                 new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES);
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
