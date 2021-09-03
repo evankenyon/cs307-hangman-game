@@ -72,19 +72,9 @@ public class HangmanGame {
      * Create the game's "scene": what shapes will be in the game and their starting properties.
      */
     public Scene setupDisplay (int width, int height, Paint background) {
-        Group root = new Group();
-        // show letters available for guessing
-        myLettersLeftToGuessDisplay = setupLetterDisplay(50, 50, 20, ALPHABET);
-        root.getChildren().addAll(myLettersLeftToGuessDisplay);
-        // show "hanged man" simply as a number that counts down
-        myNumGuessesLeftDisplay = new Text(width/2 - 100, height/2 + 100, ""+myNumGuessesLeft);
-        myNumGuessesLeftDisplay.setFont(Font.font("Verdana", FontWeight.BOLD, 300));
-        root.getChildren().add(myNumGuessesLeftDisplay);
-        // show word being guessed, with letters hidden until they are guessed
-        mySecretWordDisplay = setupLetterDisplay(200, 500, 40, myDisplayWord.toString());
-        root.getChildren().addAll(mySecretWordDisplay);
+
         // create place to see and interact with the shapes
-        myScene = new Scene(root, width, height, background);
+        myScene = new Scene(setupDisplays(width, height), width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
     }
@@ -111,37 +101,43 @@ public class HangmanGame {
         if (myGuess.length() == 1 && ALPHABET.contains(myGuess)) {
             int index = myLettersLeftToGuess.indexOf(myGuess);
             // do not count repeated guess as a miss
-            if (index < 0) {
+            if (myLettersLeftToGuess.indexOf(myGuess) < 0) {
                 return;
             }
-            // record guess
-            myLettersLeftToGuess.setCharAt(index, ' ');
-            checkGuessInSecretWord();
-            // update letters displayed to the user
-            updateDisplay(myLettersLeftToGuess.toString(), myLettersLeftToGuessDisplay);
-            myNumGuessesLeftDisplay.setText(""+myNumGuessesLeft);
-            updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
+            handleRecordGuess(index);
         }
         else {
             System.out.println("Please enter a single alphabetic letter ...");
         }
         myGuess = null;
 
-        // check for end of game
+        handleEndOfGame();
+    }
+
+    private void handleRecordGuess(int index) {
+        myLettersLeftToGuess.setCharAt(index, ' ');
+        checkGuessInSecretWord();
+        // update letters displayed to the user
+        updateDisplay(myLettersLeftToGuess.toString(), myLettersLeftToGuessDisplay);
+        myNumGuessesLeftDisplay.setText(""+myNumGuessesLeft);
+        updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
+    }
+
+    private void handleEndOfGame() {
         if (myNumGuessesLeft == 0) {
-            System.out.println("YOU ARE HUNG!!!");
-            // stop responding to key events when game is over
-            myScene.setOnKeyPressed(null);
-            // stop guessing when game is over
-            myAnimation.stop();
+            handleEndOfGameCleanup("YOU ARE HUNG!");
         }
         else if (myDisplayWord.equals(mySecretWord)) {
-            System.out.println("YOU WIN!!!");
-            // stop responding to key events when game is over
-            myScene.setOnKeyPressed(null);
-            // stop guessing when game is over
-            myAnimation.stop();
+            handleEndOfGameCleanup("YOU WIN!");
         }
+    }
+
+    private void handleEndOfGameCleanup(String endGameMessage) {
+        System.out.println(endGameMessage);
+        // stop responding to key events when game is over
+        myScene.setOnKeyPressed(null);
+        // stop guessing when game is over
+        myAnimation.stop();
     }
 
     private void updateDisplay(String string, List<Text> stringDisplay) {
@@ -156,6 +152,21 @@ public class HangmanGame {
         } else {
             myDisplayWord.update(myGuess.charAt(0), mySecretWord);
         }
+    }
+
+    private Group setupDisplays(int width, int height) {
+        // show letters available for guessing
+        Group root = new Group();
+        myLettersLeftToGuessDisplay = setupLetterDisplay(50, 50, 20, ALPHABET);
+        root.getChildren().addAll(myLettersLeftToGuessDisplay);
+        // show "hanged man" simply as a number that counts down
+        myNumGuessesLeftDisplay = new Text(width/2 - 100, height/2 + 100, ""+myNumGuessesLeft);
+        myNumGuessesLeftDisplay.setFont(Font.font("Verdana", FontWeight.BOLD, 300));
+        root.getChildren().add(myNumGuessesLeftDisplay);
+        // show word being guessed, with letters hidden until they are guessed
+        mySecretWordDisplay = setupLetterDisplay(200, 500, 40, myDisplayWord.toString());
+        root.getChildren().addAll(mySecretWordDisplay);
+        return root;
     }
 
     // Record user's input to be used in the game loop
