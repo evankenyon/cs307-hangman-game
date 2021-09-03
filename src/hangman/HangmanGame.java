@@ -27,8 +27,6 @@ public class HangmanGame {
     // constant
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
-    // word that is being guessed
-    private String mySecretWord;
     // what is shown to the user
     private DisplayWord myDisplayWord;
     // JFX variables
@@ -38,6 +36,7 @@ public class HangmanGame {
     private List<Text> mySecretWordDisplay;
     private List<Text> myLettersLeftToGuessDisplay;
     private Guesser guesser;
+    private SecretKeeper secretKeeper;
 
 
     /**
@@ -45,11 +44,11 @@ public class HangmanGame {
      * of the given length and giving the user the given number of chances.
      */
     public HangmanGame(HangmanDictionary dictionary, int wordLength, int numGuesses) {
-        mySecretWord = dictionary.getRandomWord(wordLength).toLowerCase();
-        myDisplayWord = new DisplayWord(mySecretWord);
         guesser = new Guesser(numGuesses);
+        secretKeeper = new SecretKeeper(dictionary, wordLength);
+        myDisplayWord = new DisplayWord(secretKeeper.getSecretWord());
         // SHOULD NOT PUBLIC, but makes it easier to test
-        System.out.println("*** " + mySecretWord);
+        System.out.println("*** " + secretKeeper.getSecretWord());
     }
 
     /**
@@ -115,7 +114,7 @@ public class HangmanGame {
         if (guesser.getNumGuessesLeft() == 0) {
             handleEndOfGameCleanup("YOU ARE HUNG!");
         }
-        else if (myDisplayWord.equals(mySecretWord)) {
+        else if (myDisplayWord.equals(secretKeeper.getSecretWord())) {
             handleEndOfGameCleanup("YOU WIN!");
         }
     }
@@ -133,10 +132,10 @@ public class HangmanGame {
     }
 
     private void checkGuessInSecretWord() {
-        if (! mySecretWord.contains(guesser.getCurrGuess())) {
+        if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
         } else {
-            myDisplayWord.update(guesser.getCurrGuess().charAt(0), mySecretWord);
+            myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
         }
     }
 
