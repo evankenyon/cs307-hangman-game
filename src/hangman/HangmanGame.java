@@ -23,7 +23,7 @@ import util.HangmanDictionary;
  *
  * @author Robert C. Duvall
  */
-public class HangmanInteractiveGame {
+public class HangmanGame {
     // constant
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -49,7 +49,7 @@ public class HangmanInteractiveGame {
      * Create Hangman game with the given dictionary of words to play a game with words
      * of the given length and giving the user the given number of chances.
      */
-    public HangmanInteractiveGame (HangmanDictionary dictionary, int wordLength, int numGuesses) {
+    public HangmanGame(HangmanDictionary dictionary, int wordLength, int numGuesses) {
         myNumGuessesLeft = numGuesses;
         myLettersLeftToGuess = new StringBuilder(ALPHABET);
         mySecretWord = dictionary.getRandomWord(wordLength).toLowerCase();
@@ -74,29 +74,29 @@ public class HangmanInteractiveGame {
     public Scene setupDisplay (int width, int height, Paint background) {
         Group root = new Group();
         // show letters available for guessing
-        myLettersLeftToGuessDisplay = new ArrayList<>();
-        for (int k = 0; k < ALPHABET.length(); k += 1) {
-            Text displayLetter = new Text(50+20*k, 50, ALPHABET.substring(k, k+1));
-            displayLetter.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-            myLettersLeftToGuessDisplay.add(displayLetter);
-            root.getChildren().add(displayLetter);
-        }
+        myLettersLeftToGuessDisplay = setupLetterDisplay(50, 50, 20, ALPHABET);
+        root.getChildren().addAll(myLettersLeftToGuessDisplay);
         // show "hanged man" simply as a number that counts down
         myNumGuessesLeftDisplay = new Text(width/2 - 100, height/2 + 100, ""+myNumGuessesLeft);
         myNumGuessesLeftDisplay.setFont(Font.font("Verdana", FontWeight.BOLD, 300));
         root.getChildren().add(myNumGuessesLeftDisplay);
         // show word being guessed, with letters hidden until they are guessed
-        mySecretWordDisplay = new ArrayList<>();
-        for (int k = 0; k < myDisplayWord.toString().length(); k += 1) {
-            Text displayLetter = new Text(200+20*k, 500, myDisplayWord.toString().substring(k, k+1));
-            displayLetter.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-            mySecretWordDisplay.add(displayLetter);
-            root.getChildren().add(displayLetter);
-        }
+        mySecretWordDisplay = setupLetterDisplay(200, 500, 40, myDisplayWord.toString());
+        root.getChildren().addAll(mySecretWordDisplay);
         // create place to see and interact with the shapes
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
+    }
+
+    private List<Text> setupLetterDisplay(int xOffset, int yOffset, int fontSize, String letterCollection) {
+        List<Text> letterDisplay = new ArrayList<>();
+        for (int k = 0; k < letterCollection.length(); k += 1) {
+            Text displayLetter = new Text(xOffset+20*k, yOffset, letterCollection.substring(k, k+1));
+            displayLetter.setFont(Font.font("Arial", FontWeight.BOLD, fontSize));
+            letterDisplay.add(displayLetter);
+        }
+        return letterDisplay;
     }
 
     /**
@@ -116,21 +116,11 @@ public class HangmanInteractiveGame {
             }
             // record guess
             myLettersLeftToGuess.setCharAt(index, ' ');
-            // check for guess in secret word
-            if (! mySecretWord.contains(myGuess)) {
-                myNumGuessesLeft -= 1;
-            }
-            else {
-                myDisplayWord.update(myGuess.charAt(0), mySecretWord);
-            }
+            checkGuessInSecretWord();
             // update letters displayed to the user
-            for (int k = 0; k < myLettersLeftToGuess.length(); k += 1) {
-                myLettersLeftToGuessDisplay.get(k).setText(myLettersLeftToGuess.substring(k, k+1));
-            }
+            updateDisplay(myLettersLeftToGuess.toString(), myLettersLeftToGuessDisplay);
             myNumGuessesLeftDisplay.setText(""+myNumGuessesLeft);
-            for (int k = 0; k < myDisplayWord.toString().length(); k += 1) {
-                mySecretWordDisplay.get(k).setText(myDisplayWord.toString().substring(k, k+1));
-            }
+            updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
         }
         else {
             System.out.println("Please enter a single alphabetic letter ...");
@@ -151,6 +141,20 @@ public class HangmanInteractiveGame {
             myScene.setOnKeyPressed(null);
             // stop guessing when game is over
             myAnimation.stop();
+        }
+    }
+
+    private void updateDisplay(String string, List<Text> stringDisplay) {
+        for (int k = 0; k < string.length(); k += 1) {
+            stringDisplay.get(k).setText(string.substring(k, k+1));
+        }
+    }
+
+    private void checkGuessInSecretWord() {
+        if (! mySecretWord.contains(myGuess)) {
+            myNumGuessesLeft -= 1;
+        } else {
+            myDisplayWord.update(myGuess.charAt(0), mySecretWord);
         }
     }
 

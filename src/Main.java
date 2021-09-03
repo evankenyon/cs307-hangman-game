@@ -3,7 +3,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import hangman.HangmanAutoGame;
-import hangman.HangmanInteractiveGame;
 import util.HangmanDictionary;
 
 
