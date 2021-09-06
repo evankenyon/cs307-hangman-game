@@ -110,6 +110,7 @@ public class HangmanGame {
         checkGuessInSecretWord();
         updateDisplay(guesser.getMyLettersLeftToGuess().toString(), myLettersLeftToGuessDisplay);
         myNumGuessesLeftDisplay.setText(""+guesser.getNumGuessesLeft());
+//        System.out.println(myDisplayWord.toString());
         updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
     }
 
@@ -137,9 +138,10 @@ public class HangmanGame {
     private void checkGuessInSecretWord() {
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
-            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());
+//            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());
         } else {
             myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
+            guesser.setCorrectLettersGuessedSkeleton(myDisplayWord);
         }
     }
 

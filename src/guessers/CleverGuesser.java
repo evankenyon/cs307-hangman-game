@@ -11,23 +11,36 @@ public class CleverGuesser extends Guesser{
 
     public CleverGuesser(int numGuesses, int wordLength, HangmanDictionary dictionary) {
         super(numGuesses);
+        for(int x = 0; x < wordLength; x++) {
+            correctLettersGuessedSkeleton.add("_");
+        }
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         letterFrequencyInPossibleWords = new HashMap<>();
     }
 
     @Override
     public void setCurrGuess(String currGuess) {
-        for(String letter: incorrectlyGuessedLetters) {
-            possibleWords.removeIf(word -> word.contains(letter));
-        }
+        possibleWords.removeIf(word -> {
+            for(int x = 0; x < word.length(); x++) {
+                if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {
+                    return true;
+                }
+//                if(possibleWords.size() < 10) {
+//                    System.out.print(word.charAt(x));
+//                    System.out.println(correctLettersGuessedSkeleton.get(x));
 
+//                }
+            }
+            return false;
+        });
+//        System.out.println("Overall skeleton" + correctLettersGuessedSkeleton);
 
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
-        for(String letter: letterFrequencyInPossibleWords.keySet()) {
+//        for(String letter: letterFrequencyInPossibleWords.keySet()) {
 //            System.out.print("Letter " + letter + ":");
 //            printList(possibleWords, letter);
-        }
+//        }
         setCurrGuessToMaxFreqLetter();
         letterFrequencyInPossibleWords.clear();
     }
