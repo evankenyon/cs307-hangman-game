@@ -3,7 +3,7 @@ package hangman;
 public abstract class Guesser {
     private int numGuessesLeft;
     private StringBuilder myLettersLeftToGuess;
-    private String currGuess;
+    protected String currGuess;
 
     public Guesser(int numGuesses) {
         numGuessesLeft = numGuesses;
