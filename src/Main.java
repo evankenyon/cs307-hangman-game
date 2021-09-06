@@ -1,4 +1,5 @@
 import guessers.CleverGuesser;
+import guessers.InteractiveGuesser;
 import hangman.HangmanAutoGame;
 import hangman.HangmanGame;
 import guessers.SimpleGuesser;
@@ -33,7 +34,7 @@ public class Main extends Application {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
         HangmanGame game = new HangmanGame(
 //        HangmanAutoGame game = new HangmanAutoGame(
-                gameDictionary, NUM_LETTERS, new CleverGuesser(NUM_MISSES, NUM_LETTERS, gameDictionary));
+                gameDictionary, NUM_LETTERS, new InteractiveGuesser(NUM_MISSES));
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

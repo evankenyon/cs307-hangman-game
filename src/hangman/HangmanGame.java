@@ -136,6 +136,7 @@ public class HangmanGame {
     }
 
     private void checkGuessInSecretWord() {
+        secretKeeper.setSecretWord(guesser.getCurrGuess());
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
 //            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());

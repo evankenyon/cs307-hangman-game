@@ -25,22 +25,12 @@ public class CleverGuesser extends Guesser{
                 if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {
                     return true;
                 }
-//                if(possibleWords.size() < 10) {
-//                    System.out.print(word.charAt(x));
-//                    System.out.println(correctLettersGuessedSkeleton.get(x));
-
-//                }
             }
             return false;
         });
-//        System.out.println("Overall skeleton" + correctLettersGuessedSkeleton);
 
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
-//        for(String letter: letterFrequencyInPossibleWords.keySet()) {
-//            System.out.print("Letter " + letter + ":");
-//            printList(possibleWords, letter);
-//        }
         setCurrGuessToMaxFreqLetter();
         letterFrequencyInPossibleWords.clear();
     }
@@ -77,7 +67,6 @@ public class CleverGuesser extends Guesser{
                 this.currGuess = letter;
             }
         }
-//        System.out.println("Guess: " + this.currGuess);
     }
 
     // For testing purposes, delete for final product
