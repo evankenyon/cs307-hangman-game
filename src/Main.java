@@ -1,4 +1,5 @@
 import hangman.HangmanGame;
+import hangman.SimpleGuesser;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -30,7 +31,7 @@ public class Main extends Application {
     public void start (Stage stage) {
         HangmanGame game = new HangmanGame(
 //        HangmanAutoGame game = new HangmanAutoGame(
-                new HangmanDictionary(DICTIONARY), NUM_LETTERS, NUM_MISSES);
+                new HangmanDictionary(DICTIONARY), NUM_LETTERS, new SimpleGuesser(NUM_MISSES));
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

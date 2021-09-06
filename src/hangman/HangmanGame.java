@@ -35,7 +35,7 @@ public class HangmanGame {
     private Text myNumGuessesLeftDisplay;
     private List<Text> mySecretWordDisplay;
     private List<Text> myLettersLeftToGuessDisplay;
-    private InteractiveGuesser guesser;
+    private Guesser guesser;
     private SimpleSecretKeeper secretKeeper;
 
 
@@ -43,8 +43,8 @@ public class HangmanGame {
      * Create Hangman game with the given dictionary of words to play a game with words
      * of the given length and giving the user the given number of chances.
      */
-    public HangmanGame(HangmanDictionary dictionary, int wordLength, int numGuesses) {
-        guesser = new InteractiveGuesser(numGuesses);
+    public HangmanGame(HangmanDictionary dictionary, int wordLength, Guesser guesser) {
+        this.guesser = guesser;
         secretKeeper = new SimpleSecretKeeper(dictionary, wordLength);
         myDisplayWord = new DisplayWord(secretKeeper.getSecretWord());
         // SHOULD NOT PUBLIC, but makes it easier to test
