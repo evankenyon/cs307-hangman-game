@@ -107,8 +107,8 @@ public class HangmanGame {
     }
 
     private void handleRecordGuess(int index) {
-        guesser.handleLetterAtIndexGuessed(index);
-        checkGuessInSecretWord();
+//        guesser.handleLetterAtIndexGuessed(index);
+        checkGuessInSecretWord(index);
         updateDisplay(guesser.getMyLettersLeftToGuess().toString(), myLettersLeftToGuessDisplay);
         myNumGuessesLeftDisplay.setText(""+guesser.getNumGuessesLeft());
         updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
@@ -135,13 +135,15 @@ public class HangmanGame {
         }
     }
 
-    private void checkGuessInSecretWord() {
+    private void checkGuessInSecretWord(int index) {
         secretKeeper.setSecretWord(guesser.getCurrGuess());
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
+            guesser.handleLetterAtIndexGuessed(index);
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
             secretKeeper.addIncorrectLetterGuessed(guesser.getCurrGuess());
-//            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());
+            guesser.addIncorrectLetterGuessed(guesser.getCurrGuess());
         } else {
+            guesser.handleLetterAtIndexGuessed(index);
             myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
             guesser.setCorrectLettersGuessedSkeleton(myDisplayWord);
             secretKeeper.setCorrectLettersGuessedSkeleton(myDisplayWord);

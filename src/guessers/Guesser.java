@@ -12,11 +12,13 @@ public abstract class Guesser {
     protected StringBuilder myLettersLeftToGuess;
     protected String currGuess;
     protected List<String> correctLettersGuessedSkeleton;
+    protected List<String> incorrectLettersGuessed;
 
     public Guesser(int numGuesses) {
         numGuessesLeft = numGuesses;
         myLettersLeftToGuess = new StringBuilder(HangmanGame.ALPHABET);
         correctLettersGuessedSkeleton = new ArrayList<>();
+        incorrectLettersGuessed = new ArrayList<>();
     }
 
     public String getCurrGuess() {
@@ -55,6 +57,10 @@ public abstract class Guesser {
 //            System.out.print(displayWord.toString().split(" ")[x]);
 //        }
 //        System.out.println();
+    }
+
+    public void addIncorrectLetterGuessed(String letter) {
+        incorrectLettersGuessed.add(letter);
     }
 
     public boolean isCurrGuessValid() {

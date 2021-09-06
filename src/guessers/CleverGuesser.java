@@ -25,6 +25,9 @@ public class CleverGuesser extends Guesser{
                 if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {
                     return true;
                 }
+                if(incorrectLettersGuessed.contains(String.valueOf(word.charAt(x)))){
+                    return true;
+                }
             }
             return false;
         });
@@ -70,11 +73,11 @@ public class CleverGuesser extends Guesser{
     }
 
     // For testing purposes, delete for final product
-    private void printList(List<String> list, String letter) {
+    private void printList(List<String> list) {
         for(String word: list) {
-            if(word.contains(letter)) {
+//            if(word.contains(letter)) {
                 System.out.print(word + " ");
-            }
+//            }
         }
         System.out.println();
         System.out.println();

@@ -18,7 +18,7 @@ public abstract class SecretKeeper {
     }
 
     public String getSecretWord() {
-        System.out.println("Secret word: " + secretWord);
+//        System.out.println("Secret word: " + secretWord);
         return secretWord;
     }
 
