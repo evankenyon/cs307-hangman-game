@@ -20,8 +20,14 @@ public class CleverGuesser extends Guesser{
         for(String letter: incorrectlyGuessedLetters) {
             possibleWords.removeIf(word -> word.contains(letter));
         }
+
+
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
+        for(String letter: letterFrequencyInPossibleWords.keySet()) {
+//            System.out.print("Letter " + letter + ":");
+//            printList(possibleWords, letter);
+        }
         setCurrGuessToMaxFreqLetter();
         letterFrequencyInPossibleWords.clear();
     }
@@ -41,10 +47,10 @@ public class CleverGuesser extends Guesser{
     }
 
     private void recordLetterFrequencies() {
-        for(String key: letterFrequencyInPossibleWords.keySet()) {
+        for(String letter: letterFrequencyInPossibleWords.keySet()) {
             for(String word: possibleWords) {
-                if(word.contains(key)) {
-                    letterFrequencyInPossibleWords.put(key, letterFrequencyInPossibleWords.get(key) + 1);
+                if(word.contains(letter)) {
+                    letterFrequencyInPossibleWords.put(letter, letterFrequencyInPossibleWords.get(letter) + 1);
                 }
             }
         }
@@ -52,19 +58,23 @@ public class CleverGuesser extends Guesser{
 
     private void setCurrGuessToMaxFreqLetter() {
         int maxFrequency = 0;
-        for(String key: letterFrequencyInPossibleWords.keySet()) {
-            if(letterFrequencyInPossibleWords.get(key) > maxFrequency) {
-                maxFrequency = letterFrequencyInPossibleWords.get(key);
-                this.currGuess = key;
+        for(String letter: letterFrequencyInPossibleWords.keySet()) {
+            if(letterFrequencyInPossibleWords.get(letter) > maxFrequency) {
+                maxFrequency = letterFrequencyInPossibleWords.get(letter);
+                this.currGuess = letter;
             }
         }
+//        System.out.println("Guess: " + this.currGuess);
     }
 
     // For testing purposes, delete for final product
-    private void printList(List<String> list) {
+    private void printList(List<String> list, String letter) {
         for(String word: list) {
-            System.out.print(word + " ");
+            if(word.contains(letter)) {
+                System.out.print(word + " ");
+            }
         }
+        System.out.println();
         System.out.println();
     }
 }

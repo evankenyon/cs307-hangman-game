@@ -2,15 +2,10 @@ package secret_keepers;
 
 import util.HangmanDictionary;
 
-public class SimpleSecretKeeper {
-    private String secretWord;
+public class SimpleSecretKeeper extends SecretKeeper{
 
     public SimpleSecretKeeper(HangmanDictionary dictionary, int wordLength) {
-        secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
-    }
-
-    public String getSecretWord() {
-        return secretWord;
+        super(dictionary, wordLength);
     }
 
 }
