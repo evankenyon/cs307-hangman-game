@@ -39,6 +39,8 @@ public class HangmanGame {
     private Text myNumGuessesLeftDisplay;
     private List<Text> mySecretWordDisplay;
     private List<Text> myLettersLeftToGuessDisplay;
+    private List<String> correctLettersGuessedSkeleton;
+    private List<String> incorrectLettersGuessed;
     private Guesser guesser;
     private SecretKeeper secretKeeper;
 
@@ -51,6 +53,11 @@ public class HangmanGame {
         this.guesser = guesser;
         this.secretKeeper = secretKeeper;
         myDisplayWord = new DisplayWord(secretKeeper.getSecretWord());
+        correctLettersGuessedSkeleton = new ArrayList<>();
+        incorrectLettersGuessed = new ArrayList<>();
+        for(int x = 0; x < wordLength; x++) {
+            correctLettersGuessedSkeleton.add("_");
+        }
         // SHOULD NOT PUBLIC, but makes it easier to test
         System.out.println("*** " + secretKeeper.getSecretWord());
     }
@@ -101,7 +108,7 @@ public class HangmanGame {
         else {
             System.out.println("Please enter a single alphabetic letter ...");
         }
-        guesser.setCurrGuess(null);
+        guesser.setCurrGuess(null, incorrectLettersGuessed, correctLettersGuessedSkeleton);
 
         handleEndOfGame();
     }
@@ -136,18 +143,24 @@ public class HangmanGame {
     }
 
     private void checkGuessInSecretWord(int index) {
-        secretKeeper.setSecretWord(guesser.getCurrGuess());
+        secretKeeper.setSecretWord(guesser.getCurrGuess(), incorrectLettersGuessed, correctLettersGuessedSkeleton);
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
-            guesser.handleLetterAtIndexGuessed(index);
-            guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
-            secretKeeper.addIncorrectLetterGuessed(guesser.getCurrGuess());
-            guesser.addIncorrectLetterGuessed(guesser.getCurrGuess());
+            handleIncorrectGuess(index);
         } else {
-            guesser.handleLetterAtIndexGuessed(index);
-            myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
-            guesser.setCorrectLettersGuessedSkeleton(myDisplayWord);
-            secretKeeper.setCorrectLettersGuessedSkeleton(myDisplayWord);
+            handleCorrectGuess(index);
         }
+    }
+
+    private void handleIncorrectGuess(int index) {
+        guesser.handleLetterAtIndexGuessed(index);
+        guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
+        incorrectLettersGuessed.add(guesser.getCurrGuess());
+    }
+
+    private void handleCorrectGuess(int index) {
+        guesser.handleLetterAtIndexGuessed(index);
+        myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
+        setCorrectLettersGuessedSkeleton();
     }
 
     private Group setupDisplays(int width, int height) {
@@ -164,6 +177,12 @@ public class HangmanGame {
 
     // Record user's input to be used in the game loop
     private void handleKeyInput (KeyCode code) {
-        guesser.setCurrGuess(code.getChar().toLowerCase());
+        guesser.setCurrGuess(code.getChar().toLowerCase(), incorrectLettersGuessed, correctLettersGuessedSkeleton);
     }
+
+    private void setCorrectLettersGuessedSkeleton() {
+        correctLettersGuessedSkeleton.clear();
+        correctLettersGuessedSkeleton.addAll(List.of(myDisplayWord.toString().split(" ")));
+    }
+
 }

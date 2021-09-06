@@ -13,29 +13,24 @@ public class CleverSecretKeeper extends SecretKeeper {
         super(dictionary, wordLength);
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         patternToWordsMap = new HashMap<>();
-        for (int x = 0; x < wordLength; x++) {
-            correctLettersGuessedSkeleton.add("_");
-        }
     }
 
 
     @Override
-    public void setSecretWord(String guesserGuess) {
-        initializePatternToWordsMap(guesserGuess);
+    public void setSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
+        for(String letter: incorrectLettersGuessed) {
+            possibleWords.removeIf(word -> word.contains(letter));
+        }
+        initializePatternToWordsMap(guesserGuess, correctLettersGuessedSkeleton);
         filterPossibleWords(cleanListToString(getMostWordsPattern()), guesserGuess);
         // Borrowed code for selecting random word from a List from
         // https://www.baeldung.com/java-random-list-element
         Random rand = new Random();
         secretWord = possibleWords.get(rand.nextInt(possibleWords.size()));
+        System.out.println("Secret word: " + secretWord);
     }
 
-    @Override
-    public void addIncorrectLetterGuessed(String letter) {
-        super.addIncorrectLetterGuessed(letter);
-        possibleWords.removeIf(word -> word.contains(letter));
-    }
-
-    private void initializePatternToWordsMap(String guesserGuess) {
+    private void initializePatternToWordsMap(String guesserGuess, List<String> correctLettersGuessedSkeleton) {
         patternToWordsMap.clear();
         patternToWordsMap.put(correctLettersGuessedSkeleton.toString(), new ArrayList<>());
 
@@ -43,12 +38,12 @@ public class CleverSecretKeeper extends SecretKeeper {
             if (!word.contains(guesserGuess)) {
                 patternToWordsMap.get(correctLettersGuessedSkeleton.toString()).add(word);
             } else {
-                addWordToPatternsMap(guesserGuess, word);
+                addWordToPatternsMap(guesserGuess, word, correctLettersGuessedSkeleton);
             }
         }
     }
 
-    private void addWordToPatternsMap(String guesserGuess, String word) {
+    private void addWordToPatternsMap(String guesserGuess, String word, List<String> correctLettersGuessedSkeleton) {
         // Borrowed code to get all indices of letter from
         // https://stackoverflow.com/questions/5034442/indexes-of-all-occurrences-of-character-in-a-string
         List<String> temp = new ArrayList<>(correctLettersGuessedSkeleton);

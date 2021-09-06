@@ -42,7 +42,7 @@ public class Main extends Application {
         Guesser cleverGuesser = new CleverGuesser(NUM_MISSES, NUM_LETTERS, gameDictionary);
         HangmanGame game = new HangmanGame(
 //        HangmanAutoGame game = new HangmanAutoGame(
-                gameDictionary, NUM_LETTERS, cleverGuesser, simpleSecretKeeper);
+                gameDictionary, NUM_LETTERS, interactiveGuesser, cleverSecretKeeper);
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

@@ -11,15 +11,12 @@ public class CleverGuesser extends Guesser{
 
     public CleverGuesser(int numGuesses, int wordLength, HangmanDictionary dictionary) {
         super(numGuesses);
-        for(int x = 0; x < wordLength; x++) {
-            correctLettersGuessedSkeleton.add("_");
-        }
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         letterFrequencyInPossibleWords = new HashMap<>();
     }
 
     @Override
-    public void setCurrGuess(String currGuess) {
+    public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         possibleWords.removeIf(word -> {
             for(int x = 0; x < word.length(); x++) {
                 if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {

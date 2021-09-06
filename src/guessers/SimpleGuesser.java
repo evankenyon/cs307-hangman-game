@@ -1,5 +1,7 @@
 package guessers;
 
+import java.util.List;
+
 public class SimpleGuesser extends Guesser {
     private static final String LETTERS_ORDERED_BY_FREQUENCY = "etaoinshrldcumfpgwybvkxjqz";
     private int currLetterIndex;
@@ -10,7 +12,7 @@ public class SimpleGuesser extends Guesser {
     }
 
     @Override
-    public void setCurrGuess(String currGuess) {
+    public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         this.currGuess = "" + LETTERS_ORDERED_BY_FREQUENCY.charAt(currLetterIndex);
         currLetterIndex++;
     }
