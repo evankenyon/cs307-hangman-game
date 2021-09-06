@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import secret_keepers.SecretKeeper;
 import secret_keepers.SimpleSecretKeeper;
 import util.DisplayWord;
 import util.HangmanDictionary;
@@ -39,16 +40,16 @@ public class HangmanGame {
     private List<Text> mySecretWordDisplay;
     private List<Text> myLettersLeftToGuessDisplay;
     private Guesser guesser;
-    private SimpleSecretKeeper secretKeeper;
+    private SecretKeeper secretKeeper;
 
 
     /**
      * Create Hangman game with the given dictionary of words to play a game with words
      * of the given length and giving the user the given number of chances.
      */
-    public HangmanGame(HangmanDictionary dictionary, int wordLength, Guesser guesser) {
+    public HangmanGame(HangmanDictionary dictionary, int wordLength, Guesser guesser, SecretKeeper secretKeeper) {
         this.guesser = guesser;
-        secretKeeper = new SimpleSecretKeeper(dictionary, wordLength);
+        this.secretKeeper = secretKeeper;
         myDisplayWord = new DisplayWord(secretKeeper.getSecretWord());
         // SHOULD NOT PUBLIC, but makes it easier to test
         System.out.println("*** " + secretKeeper.getSecretWord());
@@ -110,7 +111,6 @@ public class HangmanGame {
         checkGuessInSecretWord();
         updateDisplay(guesser.getMyLettersLeftToGuess().toString(), myLettersLeftToGuessDisplay);
         myNumGuessesLeftDisplay.setText(""+guesser.getNumGuessesLeft());
-//        System.out.println(myDisplayWord.toString());
         updateDisplay(myDisplayWord.toString(), mySecretWordDisplay);
     }
 
@@ -139,10 +139,12 @@ public class HangmanGame {
         secretKeeper.setSecretWord(guesser.getCurrGuess());
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
+            secretKeeper.addIncorrectLetterGuessed(guesser.getCurrGuess());
 //            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());
         } else {
             myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
             guesser.setCorrectLettersGuessedSkeleton(myDisplayWord);
+            secretKeeper.setCorrectLettersGuessedSkeleton(myDisplayWord);
         }
     }
 

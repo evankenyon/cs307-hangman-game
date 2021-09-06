@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import secret_keepers.CleverSecretKeeper;
 import util.HangmanDictionary;
 
 
@@ -34,7 +35,7 @@ public class Main extends Application {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
         HangmanGame game = new HangmanGame(
 //        HangmanAutoGame game = new HangmanAutoGame(
-                gameDictionary, NUM_LETTERS, new InteractiveGuesser(NUM_MISSES));
+                gameDictionary, NUM_LETTERS, new InteractiveGuesser(NUM_MISSES), new CleverSecretKeeper(gameDictionary, NUM_LETTERS));
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SecretKeeper {
-    private String secretWord;
+    protected String secretWord;
     protected List<String> correctLettersGuessedSkeleton;
+    protected List<String> incorrectLettersGuessed;
 
     public SecretKeeper(HangmanDictionary dictionary, int wordLength) {
         secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
         correctLettersGuessedSkeleton = new ArrayList<>();
+        incorrectLettersGuessed = new ArrayList<>();
     }
 
     public String getSecretWord() {
+        System.out.println("Secret word: " + secretWord);
         return secretWord;
     }
 
@@ -26,6 +29,10 @@ public abstract class SecretKeeper {
 
     public void setSecretWord(String guesserGuess) {
 
+    }
+
+    public void addIncorrectLetterGuessed(String letter) {
+        incorrectLettersGuessed.add(letter);
     }
 
 }
