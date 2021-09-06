@@ -5,7 +5,7 @@ import util.HangmanDictionary;
 public class SimpleSecretKeeper extends SecretKeeper{
 
     public SimpleSecretKeeper(HangmanDictionary dictionary, int wordLength) {
-        super(dictionary, wordLength);
+        secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
     }
 
 }

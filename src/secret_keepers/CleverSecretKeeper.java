@@ -10,7 +10,7 @@ public class CleverSecretKeeper extends SecretKeeper {
     private Map<String, List<String>> patternToWordsMap;
 
     public CleverSecretKeeper(HangmanDictionary dictionary, int wordLength) {
-        super(dictionary, wordLength);
+        secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         patternToWordsMap = new HashMap<>();
     }
@@ -27,7 +27,6 @@ public class CleverSecretKeeper extends SecretKeeper {
         // https://www.baeldung.com/java-random-list-element
         Random rand = new Random();
         secretWord = possibleWords.get(rand.nextInt(possibleWords.size()));
-        System.out.println("Secret word: " + secretWord);
     }
 
     private void initializePatternToWordsMap(String guesserGuess, List<String> correctLettersGuessedSkeleton) {
@@ -76,7 +75,6 @@ public class CleverSecretKeeper extends SecretKeeper {
         cleanListToString = listToString.replace("[", "");
         cleanListToString = cleanListToString.replace("]", "");
         cleanListToString = cleanListToString.replace(", ", "");
-        System.out.println(cleanListToString);
         return cleanListToString;
     }
 
