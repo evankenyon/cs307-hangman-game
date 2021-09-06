@@ -1,4 +1,4 @@
-package hangman;
+package guessers;
 
 public class InteractiveGuesser extends Guesser {
 //    private int numGuessesLeft;

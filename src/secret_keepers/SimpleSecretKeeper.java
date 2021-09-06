@@ -1,4 +1,4 @@
-package hangman;
+package secret_keepers;
 
 import util.HangmanDictionary;
 

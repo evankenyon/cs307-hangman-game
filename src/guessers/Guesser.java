@@ -1,13 +1,20 @@
-package hangman;
+package guessers;
+
+import hangman.HangmanGame;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Guesser {
     private int numGuessesLeft;
-    private StringBuilder myLettersLeftToGuess;
+    protected StringBuilder myLettersLeftToGuess;
     protected String currGuess;
+    protected List<String> incorrectlyGuessedLetters;
 
     public Guesser(int numGuesses) {
         numGuessesLeft = numGuesses;
         myLettersLeftToGuess = new StringBuilder(HangmanGame.ALPHABET);
+        incorrectlyGuessedLetters = new ArrayList<>();
     }
 
     public String getCurrGuess() {
@@ -36,6 +43,10 @@ public abstract class Guesser {
 
     public void handleLetterAtIndexGuessed(int index) {
         myLettersLeftToGuess.setCharAt(index, ' ');
+    }
+
+    public void addIncorrectlyGuessedLetter(String letter) {
+        incorrectlyGuessedLetters.add(letter);
     }
 
     public boolean isCurrGuessValid() {

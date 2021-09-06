@@ -1,10 +1,11 @@
+import guessers.CleverGuesser;
+import hangman.HangmanAutoGame;
 import hangman.HangmanGame;
-import hangman.SimpleGuesser;
+import guessers.SimpleGuesser;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import hangman.HangmanAutoGame;
 import util.HangmanDictionary;
 
 
@@ -29,9 +30,10 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) {
+        HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
         HangmanGame game = new HangmanGame(
 //        HangmanAutoGame game = new HangmanAutoGame(
-                new HangmanDictionary(DICTIONARY), NUM_LETTERS, new SimpleGuesser(NUM_MISSES));
+                gameDictionary, NUM_LETTERS, new CleverGuesser(NUM_MISSES, NUM_LETTERS, gameDictionary));
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

@@ -1,6 +1,6 @@
-package hangman;
+package guessers;
 
-public class SimpleGuesser extends Guesser{
+public class SimpleGuesser extends Guesser {
     private static final String LETTERS_ORDERED_BY_FREQUENCY = "etaoinshrldcumfpgwybvkxjqz";
     private int currLetterIndex;
 

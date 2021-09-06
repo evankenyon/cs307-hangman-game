@@ -2,6 +2,8 @@ package hangman;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import guessers.Guesser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -12,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import secret_keepers.SimpleSecretKeeper;
 import util.DisplayWord;
 import util.HangmanDictionary;
 
@@ -134,6 +137,7 @@ public class HangmanGame {
     private void checkGuessInSecretWord() {
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
+            guesser.addIncorrectlyGuessedLetter(guesser.getCurrGuess());
         } else {
             myDisplayWord.update(guesser.getCurrGuess().charAt(0), secretKeeper.getSecretWord());
         }
