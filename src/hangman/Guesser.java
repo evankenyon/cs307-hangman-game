@@ -1,6 +1,6 @@
 package hangman;
 
-public class Guesser {
+public abstract class Guesser {
     private int numGuessesLeft;
     private StringBuilder myLettersLeftToGuess;
     private String currGuess;
@@ -41,5 +41,4 @@ public class Guesser {
     public boolean isCurrGuessValid() {
         return currGuess.length() == 1 && HangmanGame.ALPHABET.contains(currGuess);
     }
-
 }

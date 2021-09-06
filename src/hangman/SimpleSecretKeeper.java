@@ -2,10 +2,10 @@ package hangman;
 
 import util.HangmanDictionary;
 
-public class SecretKeeper {
+public class SimpleSecretKeeper {
     private String secretWord;
 
-    public SecretKeeper(HangmanDictionary dictionary, int wordLength) {
+    public SimpleSecretKeeper(HangmanDictionary dictionary, int wordLength) {
         secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
     }
 
