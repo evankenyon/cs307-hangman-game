@@ -4,16 +4,39 @@ import util.HangmanDictionary;
 
 import java.util.*;
 
+/**
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example:
+ * Other details:
+ *
+ * @Author Evan Kenyon
+ */
 public class CleverGuesser extends Guesser{
     private List<String> possibleWords;
     private Map<String, Integer> letterFrequencyInPossibleWords;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param numGuesses
+     * @param wordLength
+     * @param dictionary
+     */
     public CleverGuesser(int numGuesses, int wordLength, HangmanDictionary dictionary) {
         super(numGuesses);
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         letterFrequencyInPossibleWords = new HashMap<>();
     }
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param currGuess
+     * @param incorrectLettersGuessed
+     * @param correctLettersGuessedSkeleton
+     */
     @Override
     public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         possibleWords.removeIf(word -> {

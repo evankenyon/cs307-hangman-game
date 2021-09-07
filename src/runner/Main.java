@@ -17,7 +17,7 @@ import util.HangmanDictionary;
 
 
 /**
- * This class launches the Hangman game and plays once.
+ * Purpose (comment borrowed from Prof. Duvall): This class launches the Hangman game and plays once.
  *
  * @author Robert C. Duvall
  */
@@ -33,7 +33,9 @@ public class Main extends Application {
     public static final int NUM_MISSES = 8;
 
     /**
-     * Organize display of game in a scene and start the game.
+     * Purpose (comment borrowed from Prof. Duvall): Organize display of game in a scene and start the game.
+     * Assumptions:
+     * @param stage
      */
     @Override
     public void start (Stage stage) {

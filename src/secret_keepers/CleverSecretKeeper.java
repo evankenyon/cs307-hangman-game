@@ -4,11 +4,26 @@ import util.HangmanDictionary;
 
 import java.util.*;
 
+/**
+ * Purpose:
+ * Assumptions:
+ * Dependencies:
+ * Example:
+ * Other details:
+ *
+ * @Author Evan Kenyon
+ */
 public class CleverSecretKeeper extends SecretKeeper {
 
     private List<String> possibleWords;
     private Map<String, List<String>> patternToWordsMap;
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param dictionary
+     * @param wordLength
+     */
     public CleverSecretKeeper(HangmanDictionary dictionary, int wordLength) {
         secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
@@ -16,6 +31,13 @@ public class CleverSecretKeeper extends SecretKeeper {
     }
 
 
+    /**
+     * Purpose:
+     * Assumptions:
+     * @param guesserGuess
+     * @param incorrectLettersGuessed
+     * @param correctLettersGuessedSkeleton
+     */
     @Override
     public void setSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         for(String letter: incorrectLettersGuessed) {
