@@ -1,6 +1,5 @@
 package guessers;
 
-import hangman.HangmanGame;
 import util.HangmanDictionary;
 
 import java.util.*;
@@ -67,16 +66,5 @@ public class CleverGuesser extends Guesser{
                 this.currGuess = letter;
             }
         }
-    }
-
-    // For testing purposes, delete for final product
-    private void printList(List<String> list) {
-        for(String word: list) {
-//            if(word.contains(letter)) {
-                System.out.print(word + " ");
-//            }
-        }
-        System.out.println();
-        System.out.println();
     }
 }

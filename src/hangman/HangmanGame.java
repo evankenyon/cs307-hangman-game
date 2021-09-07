@@ -54,7 +54,6 @@ public class HangmanGame {
     // JFX variables
     private Scene scene;
     private Timeline animation;
-//    private Text myNumGuessesLeftDisplay;
     private Group gallowsDisplay;
     private List<Text> secretWordDisplay;
     private List<Text> lettersLeftToGuessDisplay;
@@ -66,7 +65,7 @@ public class HangmanGame {
 
 
     /**
-     * Create Hangman game with the given dictionary of words to play a game with words
+     * Purpose (comment borrowed from Prof. Duvall): Create Hangman game with the given dictionary of words to play a game with words
      * of the given length and giving the user the given number of chances.
      */
     public HangmanGame(int wordLength, Guesser guesser, SecretKeeper secretKeeper) {
@@ -83,7 +82,7 @@ public class HangmanGame {
     }
 
     /**
-     * Start the game by animating the display of changes in the GUI every speed seconds.
+     * Purpose (comment borrowed from Prof. Duvall): Start the game by animating the display of changes in the GUI every speed seconds.
      */
     public void start (double speed) {
         animation = new Timeline();
@@ -93,7 +92,7 @@ public class HangmanGame {
     }
 
     /**
-     * Create the game's "scene": what shapes will be in the game and their starting properties.
+     * Purpose (comment borrowed from Prof. Duvall): Create the game's "scene": what shapes will be in the game and their starting properties.
      */
     public Scene setupDisplay (int width, int height, Paint background) {
         scene = new Scene(setupDisplays(width, height), width, height, background);
@@ -112,7 +111,7 @@ public class HangmanGame {
     }
 
     /**
-     * Play one round of the game.
+     * Purpose (comment borrowed from Prof. Duvall): Play one round of the game.
      */
     public void playGuess () {
         if (guesser.getCurrGuess() == null) {
