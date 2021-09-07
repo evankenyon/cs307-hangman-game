@@ -3,11 +3,14 @@ package secret_keepers;
 import util.HangmanDictionary;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Represent a simple secret keeper that generates one secret word when its constructed
+ * by randomly choosing one of wordLength from dictionary
+ * Assumptions: dictionary has words of wordLength
+ * Dependencies: HangmanDictionary
+ * Example: Instantiate a SimpleSecretKeeper object in order to randomly choose a word for a
+ * guesser to guess in a HangmanGame
+ * Other details: Want all words to be lower case to keep upper case letters from becoming an
+ * issue (i.e. from being counted separately when that's not the desired functionality)
  *
  * @Author Evan Kenyon
  */

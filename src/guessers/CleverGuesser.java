@@ -5,11 +5,12 @@ import util.HangmanDictionary;
 import java.util.*;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Represent a guesser for a hangman game, specifically one that chooses a letter to guess based on the most possible words
+ * (i.e. words that fit the currently displayed letters and do not contain incorrect letters) remaining containing that letter
+ * Assumptions: JavaFX installed on device, wordLength and dictionary are both reasonable (i.e. wordLength should generally
+ * be less than the number of guesses the guesser has and dictionary should be fairly large) and same as used in secret keeper
+ * Dependencies: HangmanDictionary, List, Map
+ * Example: Construct a clever guesser to use as an argument for the Hangman class to guess letters as described in the purpose
  *
  * @Author Evan Kenyon
  */
@@ -21,7 +22,7 @@ public class CleverGuesser extends Guesser{
      * Purpose: Construct a clever guesser object that guesses a letter based on the following algorithm:
      * https://courses.cs.duke.edu/compsci101/spring14/assign/05_hangman/howto.php#Clever
      * Assumptions: dictionary is not null, same one as used in secret keeper if applicable (i.e. if not interactive
-     * secret keeper)
+     * secret keeper), wordLength is same one as used in secret keeper
      * @param wordLength length of word to be guessed
      * @param dictionary possible words to be guessed
      */

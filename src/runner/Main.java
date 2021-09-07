@@ -18,8 +18,15 @@ import util.HangmanDictionary;
 
 /**
  * Purpose (comment borrowed from Prof. Duvall): This class launches the Hangman game and plays once.
+ * Assumptions: NUM_MISSES stays 8, HangmanGame class public static final ints are changed accordingly if
+ * SIZE is changed
+ * Dependencies: guessers package, secret_keepers package, HangmanDictionary, JavaFX, HangmanGame
+ * Example: Put the desired types of guesser and secretkeeper in the HangmanGame constructor, then run in
+ * order to launch the game with those players
+ * Other details: Comment out interactiveSecretKeeper out when not in use since constructing it prompts
+ * the user to input a secret word, which isn't relevant for the other secret keepers
  *
- * @author Robert C. Duvall
+ * @author Evan Kenyon
  */
 public class Main extends Application {
     // constants - JFX
@@ -41,8 +48,6 @@ public class Main extends Application {
     @Override
     public void start (Stage stage) {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
-        // Commented interactiveSecretKeeper out since constructing it prompts the user to input a secret word,
-        // which isn't relevant for the other secret keepers
         SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
         SecretKeeper simpleSecretKeeper = new SimpleSecretKeeper(gameDictionary, NUM_LETTERS);
         SecretKeeper cleverSecretKeeper = new CleverSecretKeeper(gameDictionary, NUM_LETTERS);

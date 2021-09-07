@@ -3,11 +3,11 @@ package guessers;
 import java.util.List;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Represent a guesser object that simply guesses letters in order of their frequency
+ * in English words
+ * Dependencies: List
+ * Example: Instantiate a SimpleGuesser object to pass into a HangmanGame constructor in order to
+ * guess the secret word's letters by guessing letters in order of their frequency in English words
  *
  * @Author Evan Kenyon
  */

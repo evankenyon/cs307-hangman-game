@@ -6,11 +6,15 @@ import runner.Main;
 import java.util.List;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Template for specific implementations of a guesser class, specifically for this project
+ * an interactive guesser, a simple guesser, and clever guesser. Contains methods used by all 3 in order
+ * to employ principles of inheritance.
+ * Dependencies: List, Main, HangmanGame (for ALPHABET)
+ * Example: Instantiate a guesser object, specifically one of the above, for use in the HangmanGame constructor
+ * in order to play the game with a guesser as intended
+ * Other details: setCurrGuess's incorrectLettersGuessed and correctLettersGuessedSkeleton are only used in CleverGuesser,
+ * but kept in this class since the setCurrGuess method is called on every guesser object and this was preferable to introducing
+ * extraneous booleans in HangmanGame's constructor.
  *
  * @Author Evan Kenyon
  */

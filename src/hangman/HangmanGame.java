@@ -23,9 +23,13 @@ import runner.Main;
 
 
 /**
- * Purpose (comment borrowed from Prof. Duvall): This class represents a game of Hangman between:
- *  - an interactive guesser
- *  - a secret word keeper that chooses a random secret word
+ * Purpose: This class represents a game of Hangman between a guesser who guesses a secret word
+ * and a secret word keeper that chooses a secret word (sometimes multiple times if using a CleverSecretKeeper)
+ * Assumptions: public static final ints are changed to allow for the hung person and the gallows to properly fit
+ * the screen if Main.SIZE is changed significantly
+ * Dependencies: JavaFX, Main, DisplayWord, SecretKeeper, Guesser, ArrayList, List
+ * Example: Instantiate a HangmanGame object to play a game of hangman between a guesser and a secret keeper in a GUI,
+ * with a hung person slowly developed as incorrect guesses from the guesser add up
  *
  * @author Robert C. Duvall
  */
