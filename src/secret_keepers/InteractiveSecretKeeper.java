@@ -1,7 +1,6 @@
 package secret_keepers;
 
 import javafx.scene.control.TextInputDialog;
-import util.HangmanDictionary;
 
 import java.util.Optional;
 

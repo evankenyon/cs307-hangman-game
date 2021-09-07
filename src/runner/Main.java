@@ -1,7 +1,8 @@
+package runner;
+
 import guessers.CleverGuesser;
 import guessers.Guesser;
 import guessers.InteractiveGuesser;
-import hangman.HangmanAutoGame;
 import hangman.HangmanGame;
 import guessers.SimpleGuesser;
 import javafx.application.Application;
@@ -37,14 +38,16 @@ public class Main extends Application {
     @Override
     public void start (Stage stage) {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
-        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
+        // Commented interactiveSecretKeeper out since constructing it prompts the user to input a secret word,
+        // which isn't relevant for the other secret keepers
+//        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
         SecretKeeper simpleSecretKeeper = new SimpleSecretKeeper(gameDictionary, NUM_LETTERS);
         SecretKeeper cleverSecretKeeper = new CleverSecretKeeper(gameDictionary, NUM_LETTERS);
         Guesser interactiveGuesser = new InteractiveGuesser(NUM_MISSES);
         Guesser simpleGuesser = new SimpleGuesser(NUM_MISSES);
         Guesser cleverGuesser = new CleverGuesser(NUM_MISSES, NUM_LETTERS, gameDictionary);
-        
-        HangmanGame game = new HangmanGame(gameDictionary, NUM_LETTERS, simpleGuesser, interactiveSecretKeeper);
+
+        HangmanGame game = new HangmanGame(NUM_LETTERS, cleverGuesser, cleverSecretKeeper);
         stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();
