@@ -19,10 +19,12 @@ public class CleverSecretKeeper extends SecretKeeper {
     private Map<String, List<String>> patternToWordsMap;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param dictionary
-     * @param wordLength
+     * Purpose: Construct a clever secret keeper object that implements the following algorithm to generate a new
+     * secret word after each of the guesser's guesses:
+     * https://courses.cs.duke.edu/compsci101/spring14/assign/05_hangman/howto.php#Clever
+     * Assumptions: dictionary is not null, same one as in InteractiveGuesser object
+     * @param dictionary possible secret words to select from
+     * @param wordLength required length of every secret word
      */
     public CleverSecretKeeper(HangmanDictionary dictionary, int wordLength) {
         secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
@@ -32,9 +34,10 @@ public class CleverSecretKeeper extends SecretKeeper {
 
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param guesserGuess
+     * Purpose: Set a new secret word after each of the guesser's guess
+     * Assumptions: guesserGuess is most recent guesser's guess,incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
+     *      * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
+     * @param guesserGuess used to
      * @param incorrectLettersGuessed
      * @param correctLettersGuessedSkeleton
      */

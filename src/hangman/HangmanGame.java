@@ -65,12 +65,12 @@ public class HangmanGame {
 
 
     /**
-     * Purpose (comment borrowed from Prof. Duvall): Create Hangman game with the given dictionary of words to play a game with words
-     * of the given length and giving the user the given number of chances.
-     * Assumptions:
-     * @param wordLength
-     * @param guesser
-     * @param secretKeeper
+     * Purpose (comment partially borrowed from Prof. Duvall): Create Hangman game with the given guesser and secretKeeper, whose specific
+     * types and attributes are determined by the call to this constructor in main class, and  with words of the given length
+     * Assumptions: guesser and secretKeeper are properly constructed with same wordLength used if applicable
+     * @param wordLength length of word to be guessed
+     * @param guesser object that guesses the word
+     * @param secretKeeper object that generates the word to be guessed
      */
     public HangmanGame(int wordLength, Guesser guesser, SecretKeeper secretKeeper) {
         this.guesser = guesser;
@@ -87,8 +87,8 @@ public class HangmanGame {
 
     /**
      * Purpose (comment borrowed from Prof. Duvall): Start the game by animating the display of changes in the GUI every speed seconds.
-     * Assumptions:
-     * @param speed
+     * Assumptions: speed is long enough so that computer can register distinct key inputs as single characters
+     * @param speed second_delay for GUI
      */
     public void start (double speed) {
         animation = new Timeline();
@@ -98,15 +98,14 @@ public class HangmanGame {
     }
 
     /**
-     * Purpose (comment borrowed from Prof. Duvall): Create the game's "scene": what shapes will be in the game and their starting properties.
-     * Assumptions:
-     * @param width
-     * @param height
-     * @param background
-     * @return
+     * Purpose (comment borrowed from Prof. Duvall): Create the game's "scene": what shapes will be in the game at the beginning
+     * and their starting properties.
+     * Assumptions: background is not null
+     * @param background color of game background
+     * @return scene where hangman game takes place
      */
-    public Scene setupDisplay (int width, int height, Paint background) {
-        scene = new Scene(setupDisplays(width, height), width, height, background);
+    public Scene setupDisplay (Paint background) {
+        scene = new Scene(setupDisplays(Main.SIZE, Main.SIZE), Main.SIZE, Main.SIZE, background);
         scene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return scene;
     }
@@ -123,7 +122,6 @@ public class HangmanGame {
 
     /**
      * Purpose (comment borrowed from Prof. Duvall): Play one round of the game.
-     * Assumtions:
      */
     public void playGuess () {
         if (guesser.getCurrGuess() == null) {
@@ -167,7 +165,7 @@ public class HangmanGame {
             primaryRoot.getChildren().add(new Line(TOP_GALLOWS_END_X, ROPE_GALLOWS_END_Y + LEG_OFFSET_Y, TOP_GALLOWS_END_X + LIMB_END_OFFSET, ROPE_GALLOWS_END_Y + LEG_OFFSET_Y + LIMB_END_OFFSET));
         } else if (guesser.getNumGuessesLeft() == 1) {
             produceLeftX();
-        } else {
+        } else if (guesser.getNumGuessesLeft() == 0) {
             produceRightX();
         }
     }
@@ -221,7 +219,7 @@ public class HangmanGame {
 
     private void handleIncorrectGuess(int index) {
         guesser.handleLetterAtIndexGuessed(index);
-        guesser.setNumGuessesLeft(guesser.getNumGuessesLeft() - 1);
+        guesser.decrementNumGuesses();
         incorrectLettersGuessed.add(guesser.getCurrGuess());
     }
 

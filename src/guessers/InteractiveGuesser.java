@@ -12,12 +12,10 @@ package guessers;
 public class InteractiveGuesser extends Guesser {
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param numGuesses
+     * Purpose: Construct an interactive guesser that guesses letters by inputting them on the keyboard
      */
-    public InteractiveGuesser(int numGuesses) {
-        super(numGuesses);
+    public InteractiveGuesser() {
+        super();
     }
 
 }

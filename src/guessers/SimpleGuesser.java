@@ -16,21 +16,20 @@ public class SimpleGuesser extends Guesser {
     private int currLetterIndex;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param numGuesses
+     * Purpose: Create a simple guesser that guesses letter by frequency in English words
      */
-    public SimpleGuesser(int numGuesses) {
-        super(numGuesses);
+    public SimpleGuesser() {
+        super();
         currLetterIndex = 0;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param currGuess
-     * @param incorrectLettersGuessed
-     * @param correctLettersGuessedSkeleton
+     * Purpose: Set the current guess to the next most frequent letter
+     * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
+     * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
+     * @param currGuess used for InteractiveGuesser's setCurrGuess function, but not relevant here
+     * @param incorrectLettersGuessed only used in CleverGuesser, described in detail there
+     * @param correctLettersGuessedSkeleton only used in CleverGuesser, described in detail there
      */
     @Override
     public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {

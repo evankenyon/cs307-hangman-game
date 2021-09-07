@@ -16,9 +16,9 @@ import java.util.Optional;
 public class InteractiveSecretKeeper extends SecretKeeper{
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param wordLength
+     * Purpose: Construct an interactive secret keeper that generates a secret word from input from the keyboard
+     * Assumptions: wordLength is consistent with wordLength argument for guesser class if applicable
+     * @param wordLength length of secret word
      */
     public InteractiveSecretKeeper(int wordLength) {
         secretWord = getInput(String.format("Please enter a secret word %d letters long", wordLength), wordLength);

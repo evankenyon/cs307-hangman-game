@@ -1,6 +1,7 @@
 package guessers;
 
 import hangman.HangmanGame;
+import runner.Main;
 
 import java.util.List;
 
@@ -19,56 +20,52 @@ public abstract class Guesser {
     protected String currGuess;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param numGuesses
+     * Purpose: Construct a guesser object that guesses letters in HangmanGame
+     * Assumptions: Hangman.ALPHABET is the entire English alphabet in lowercase
      */
-    public Guesser(int numGuesses) {
-        numGuessesLeft = numGuesses;
+    public Guesser() {
+        numGuessesLeft = Main.NUM_MISSES;
         myLettersLeftToGuess = new StringBuilder(HangmanGame.ALPHABET);
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Get this guesser's current guess
+     * @return this guesser's current guess
      */
     public String getCurrGuess() {
         return currGuess;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param currGuess
-     * @param incorrectLettersGuessed
-     * @param correctLettersGuessedSkeleton
+     * Purpose: Sets this guesser's current guess to the currGuess argument
+     * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
+     * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
+     * @param currGuess the letter to set this guesser's current guess to
+     * @param incorrectLettersGuessed only used in CleverGuesser, described in detail there
+     * @param correctLettersGuessedSkeleton only used in CleverGuesser, described in detail there
      */
     public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         this.currGuess = currGuess;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Get this guesser's number of guesses left before a game over
+     * @return this guesser's number of guesses left before a game over
      */
     public int getNumGuessesLeft() {
         return numGuessesLeft;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param numGuessesLeft
+     * Purpose: Decrement this guesser's number of guesses left by 1
      */
-    public void setNumGuessesLeft(int numGuessesLeft) {
-        this.numGuessesLeft = numGuessesLeft;
+    public void decrementNumGuesses() {
+        this.numGuessesLeft -= 1;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
+     * Purpose: Get the index of this guesser's current guess in the myLettersLeftToGuess member var
+     * Assumptions: myLettersLeftToGuess is the English alphabet in order a-z
      * @return
      */
     public int getCurrGuessIndex() {
@@ -76,27 +73,25 @@ public abstract class Guesser {
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Get this guesser's myLettersLeftToGuess member var
+     * @return this guesser's myLettersLeftToGuess member var
      */
     public StringBuilder getMyLettersLeftToGuess() {
         return myLettersLeftToGuess;
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param index
+     * Purpose: Replace the letter at index with the space character to indicate the letter at the index was guessed
+     * @param index the index in myLettersLeftToGuess to set to the space character
      */
     public void handleLetterAtIndexGuessed(int index) {
         myLettersLeftToGuess.setCharAt(index, ' ');
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @return
+     * Purpose: Check to see if the current guess is valid
+     * Assumptions: HangmanGame.ALPHABET is the entire English alphabet
+     * @return if the current guess is valid
      */
     public boolean isCurrGuessValid() {
         return currGuess.length() == 1 && HangmanGame.ALPHABET.contains(currGuess);

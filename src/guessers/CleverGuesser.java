@@ -18,43 +18,48 @@ public class CleverGuesser extends Guesser{
     private Map<String, Integer> letterFrequencyInPossibleWords;
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param numGuesses
-     * @param wordLength
-     * @param dictionary
+     * Purpose: Construct a clever guesser object that guesses a letter based on the following algorithm:
+     * https://courses.cs.duke.edu/compsci101/spring14/assign/05_hangman/howto.php#Clever
+     * Assumptions: dictionary is not null, same one as used in secret keeper if applicable (i.e. if not interactive
+     * secret keeper)
+     * @param wordLength length of word to be guessed
+     * @param dictionary possible words to be guessed
      */
-    public CleverGuesser(int numGuesses, int wordLength, HangmanDictionary dictionary) {
-        super(numGuesses);
+    public CleverGuesser(int wordLength, HangmanDictionary dictionary) {
+        super();
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         letterFrequencyInPossibleWords = new HashMap<>();
     }
 
     /**
-     * Purpose:
-     * Assumptions:
-     * @param currGuess
-     * @param incorrectLettersGuessed
-     * @param correctLettersGuessedSkeleton
+     * Purpose: Set the current guess for this guesser to guess in the hangman game based on the algorithm linked to above
+     * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
+     * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
+     * @param currGuess used for InteractiveGuesser's setCurrGuess function, but not relevant here
+     * @param incorrectLettersGuessed incorrectly guessed letters thus far (i.e. none of the possible words to be guessed can have
+     *                                these letters, so used to filter that list)
+     * @param correctLettersGuessedSkeleton described in assumptions, used to filter possibleWords such that no possible words will
+     *                                      have letters that are in the spot of a letter that's already correctly guessed in that spot
      */
     @Override
     public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
-        possibleWords.removeIf(word -> {
-            for(int x = 0; x < word.length(); x++) {
-                if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {
-                    return true;
-                }
-                if(incorrectLettersGuessed.contains(String.valueOf(word.charAt(x)))){
-                    return true;
-                }
-            }
-            return false;
-        });
-
+        possibleWords.removeIf(word -> shouldRemoveWord(word, incorrectLettersGuessed, correctLettersGuessedSkeleton));
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
         setCurrGuessToMaxFreqLetter();
         letterFrequencyInPossibleWords.clear();
+    }
+
+    private boolean shouldRemoveWord(String word, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
+        for(int x = 0; x < word.length(); x++) {
+            if(!correctLettersGuessedSkeleton.get(x).equals("_") && !String.valueOf(word.charAt(x)).equals(correctLettersGuessedSkeleton.get(x))) {
+                return true;
+            }
+            if(incorrectLettersGuessed.contains(String.valueOf(word.charAt(x)))){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void initializeLetterFrequencyInPossibleWords() {

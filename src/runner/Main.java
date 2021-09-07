@@ -33,24 +33,25 @@ public class Main extends Application {
     public static final int NUM_MISSES = 8;
 
     /**
-     * Purpose (comment borrowed from Prof. Duvall): Organize display of game in a scene and start the game.
-     * Assumptions:
-     * @param stage
+     * Purpose (first sentence borrowed from Prof. Duvall): Organize display of game in a scene and start the game.
+     * Also, construct all different types of secret keepers and guessers to make it easy to swap them out of HangmanGame
+     * constructor
+     * @param stage Stage object to contain scene in which game will be played
      */
     @Override
     public void start (Stage stage) {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
         // Commented interactiveSecretKeeper out since constructing it prompts the user to input a secret word,
         // which isn't relevant for the other secret keepers
-//        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
+        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
         SecretKeeper simpleSecretKeeper = new SimpleSecretKeeper(gameDictionary, NUM_LETTERS);
         SecretKeeper cleverSecretKeeper = new CleverSecretKeeper(gameDictionary, NUM_LETTERS);
-        Guesser interactiveGuesser = new InteractiveGuesser(NUM_MISSES);
-        Guesser simpleGuesser = new SimpleGuesser(NUM_MISSES);
-        Guesser cleverGuesser = new CleverGuesser(NUM_MISSES, NUM_LETTERS, gameDictionary);
+        Guesser interactiveGuesser = new InteractiveGuesser();
+        Guesser simpleGuesser = new SimpleGuesser();
+        Guesser cleverGuesser = new CleverGuesser(NUM_LETTERS, gameDictionary);
 
-        HangmanGame game = new HangmanGame(NUM_LETTERS, cleverGuesser, cleverSecretKeeper);
-        stage.setScene(game.setupDisplay(SIZE, SIZE, BACKGROUND));
+        HangmanGame game = new HangmanGame(NUM_LETTERS, interactiveGuesser, interactiveSecretKeeper);
+        stage.setScene(game.setupDisplay(BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();
 
