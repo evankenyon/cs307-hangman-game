@@ -31,7 +31,7 @@ import runner.Main;
  * Example: Instantiate a HangmanGame object to play a game of hangman between a guesser and a secret keeper in a GUI,
  * with a hung person slowly developed as incorrect guesses from the guesser add up
  *
- * @author Robert C. Duvall
+ * @author Evan Kenyon
  */
 public class HangmanGame {
     // constant

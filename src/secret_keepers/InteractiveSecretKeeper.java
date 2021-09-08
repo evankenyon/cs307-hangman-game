@@ -5,11 +5,12 @@ import javafx.scene.control.TextInputDialog;
 import java.util.Optional;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Represent an interactive secret keeper that generates a secret word
+ * for the user to guess based off of keyboard input
+ * Assumptions: user running program has a functional keyboard
+ * Dependencies: Optional, JavaFX
+ * Example: Instantiate an InteractiveSecretKeeper object to use in a HangmanGame
+ * constructor in order to generate the secret word to be guessed in the game
  *
  * @Author Evan Kenyon
  */

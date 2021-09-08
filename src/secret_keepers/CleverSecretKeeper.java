@@ -5,11 +5,14 @@ import util.HangmanDictionary;
 import java.util.*;
 
 /**
- * Purpose:
- * Assumptions:
- * Dependencies:
- * Example:
- * Other details:
+ * Purpose: Represent a clever secret keeper in the game of hangman. Chooses a random secret word after
+ * each of the guesser's guess based on which display word pattern has the most possible words (algorithm
+ * described in more detail in the link found in the constructor's javadocs)
+ * Assumptions: dictionary and wordLength are reasonable (i.e. dictionary has a plethora of words of
+ * wordLength)
+ * Dependencies: List, Map, HangmanDictionary
+ * Example: Instantiate a clever secret keeper to use in a HangmanGame constructor in order to generate
+ * secret words as described in the purpose
  *
  * @Author Evan Kenyon
  */
@@ -35,11 +38,13 @@ public class CleverSecretKeeper extends SecretKeeper {
 
     /**
      * Purpose: Set a new secret word after each of the guesser's guess
-     * Assumptions: guesserGuess is most recent guesser's guess,incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
-     *      * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
-     * @param guesserGuess used to
-     * @param incorrectLettersGuessed
-     * @param correctLettersGuessedSkeleton
+     * Assumptions: guesserGuess is most recent guesser's guess,incorrectLettersGuessed is a list of incorrectly guessed letters
+     * and correctLettersGuessedSkeleton is the toString of displayWord (from HangmanGame) in List form
+     * (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
+     * @param guesserGuess used for generation of potential patterns and words that fall into those patterns
+     * @param incorrectLettersGuessed cannot have any secret words contain already incorrectly guessed letters
+     * @param correctLettersGuessedSkeleton foundation for generating patterns (i.e. potential patterns can be this pattern
+     *                                      or this pattern with the most recently guessed letter in one or more empty spots)
      */
     @Override
     public void setSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
