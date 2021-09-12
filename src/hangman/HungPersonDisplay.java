@@ -10,6 +10,15 @@ import runner.Main;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Purpose: Represent a hung person display for a hangman game
+ * Assumptions: guessesToBodyPart only has Nodes for keys 0-7 (inclusive)
+ * Dependencies: HashMap, Map, Main, JavaFX
+ * Example: Construct a HungPersonDisplay to use in HangmanGame. In HangmanGame, there is
+ * a method that calls getBodyPart with the guesser's guesses and adds the returned body
+ * part to ths scene. Also, HangmanGame calls setupGallowsDisplay at the beginning of the game
+ * to add the gallows Group to the scene.
+ */
 public class HungPersonDisplay {
     public static final int BOTTOM_GALLOWS_START_X = Main.SIZE/2 - 200;
     public static final int BOTTOM_GALLOWS_END_X = Main.SIZE/2 - 100;
@@ -31,8 +40,12 @@ public class HungPersonDisplay {
     private Map<Integer, Node> guessesToBodyPart;
 
     /**
-     * Purpose: Construct a HungPersonDisplay object that consists
-     * Assumptions:
+     * Purpose: Construct a HungPersonDisplay object. Specifically, adds
+     * relevant Nodes to hashmap with the number of guesses left when they should
+     * be drawn as the key
+     * Assumptions: The constants are changed in accordance with one another to ensure
+     * everything fits together well (i.e. the head shouldn't be disproportionately larger than
+     * the body or far away from the gallows themselves)
      */
     public HungPersonDisplay() {
         guessesToBodyPart = new HashMap<>();
@@ -46,10 +59,24 @@ public class HungPersonDisplay {
         produceRightX();
     }
 
+    /**
+     * Purpose: Get the body part corresponding to the number of guesses the guesser has left
+     * in order for the HangmanGame class to add the Node to the scene
+     * Assumptions: numGuessesLeft represents the number of guesses the player has left, is not
+     * the same between function calls within the same run of the program, and is not more than 7
+     * or less than 0
+     * @param numGuessesLeft the number of guesses the player has left
+     * @return the Node to add to the scene in HangmanGame
+     */
     public Node getBodyPart(int numGuessesLeft) {
         return guessesToBodyPart.get(numGuessesLeft);
     }
 
+    /**
+     * Purpose: Set up the gallows themselves at the game's beginning
+     * Assumptions: Only called once by HangmanGame at the beginning of the game
+     * @return a Group consisting of the Lines that make up gallows
+     */
     public Group setupGallowsDisplay() {
         Line bottomGallows = new Line(BOTTOM_GALLOWS_START_X, BOTTOM_GALLOWS_Y, BOTTOM_GALLOWS_END_X, BOTTOM_GALLOWS_Y);
         Line verticalGallows = new Line(VERTICAL_GALLOWS_X, BOTTOM_GALLOWS_Y, VERTICAL_GALLOWS_X, VERTICAL_GALLOWS_END_Y);
