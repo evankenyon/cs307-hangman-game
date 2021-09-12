@@ -25,6 +25,10 @@ public class InteractiveSecretKeeper extends SecretKeeper{
         secretWord = getInput(String.format("Please enter a secret word %d letters long", wordLength), wordLength);
     }
 
+    /**
+     * Purpose: Get the type of this secret keeper
+     * @return the type of this secret keeper (INTERACTIVE)
+     */
     public int getType() {
         return INTERACTIVE;
     }

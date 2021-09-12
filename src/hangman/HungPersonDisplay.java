@@ -5,7 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 import runner.Main;
 
 import java.util.HashMap;
@@ -31,6 +30,10 @@ public class HungPersonDisplay {
 
     private Map<Integer, Node> guessesToBodyPart;
 
+    /**
+     * Purpose: Construct a HungPersonDisplay object that consists
+     * Assumptions:
+     */
     public HungPersonDisplay() {
         guessesToBodyPart = new HashMap<>();
         guessesToBodyPart.put(7, new Circle(TOP_GALLOWS_END_X, ROPE_GALLOWS_END_Y + HEAD_OFFSET_Y, HEAD_OFFSET_Y));

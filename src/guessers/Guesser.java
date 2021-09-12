@@ -3,7 +3,6 @@ package guessers;
 import hangman.HangmanGame;
 import runner.Main;
 
-import java.util.List;
 
 // Should make getCurrGuess have all the logic for setting guess as well, don't want hangman class to call setCurrGuess
 /**
@@ -62,6 +61,10 @@ public abstract class Guesser {
         this.numGuessesLeft -= 1;
     }
 
+    /**
+     * Purpose: Get the type of this guesser
+     * @return the type of this guesser
+     */
     public abstract int getType();
 
     /**

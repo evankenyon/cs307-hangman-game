@@ -18,14 +18,20 @@ public class InteractiveGuesser extends Guesser {
      * Purpose: Construct an interactive guesser that guesses letters by inputting them on the keyboard
      */
     public InteractiveGuesser() {
-        super();
     }
 
-    public String setNewGuess(KeyCode code) {
+    /**
+     * Purpose: set currGuess to letter input on keyboard
+     * @param code key pressed
+     */
+    public void setCurrGuess(KeyCode code) {
         currGuess = code.getChar().toLowerCase();
-        return currGuess;
     }
 
+    /**
+     * Purpose: Get the type of this guesser
+     * @return the type of this guesser (INTERACTIVE)
+     */
     public int getType() {
         return INTERACTIVE;
     }

@@ -29,5 +29,9 @@ public abstract class SecretKeeper {
         return secretWord;
     }
 
+    /**
+     * Purpose: Get the type of this secret keeper
+     * @return the type of this secret keeper
+     */
     public abstract int getType();
 }

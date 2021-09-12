@@ -27,7 +27,6 @@ public class CleverGuesser extends Guesser{
      * @param dictionary possible words to be guessed
      */
     public CleverGuesser(int wordLength, HangmanDictionary dictionary) {
-        super();
         possibleWords = new ArrayList<>(dictionary.getWords(wordLength));
         letterFrequencyInPossibleWords = new HashMap<>();
     }
@@ -41,12 +40,20 @@ public class CleverGuesser extends Guesser{
      * @param correctLettersGuessedSkeleton described in assumptions, used to filter possibleWords such that no possible words will
      *                                      have letters that are in the spot of a letter that's already correctly guessed in that spot
      */
-    public void setNewGuess(List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
+    public void setCurrGuess(List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         possibleWords.removeIf(word -> shouldRemoveWord(word, incorrectLettersGuessed, correctLettersGuessedSkeleton));
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
         setCurrGuessToMaxFreqLetter();
         letterFrequencyInPossibleWords.clear();
+    }
+
+    /**
+     * Purpose: Get the type of this guesser
+     * @return the type of this guesser (CLEVER)
+     */
+    public int getType() {
+        return CLEVER;
     }
 
     private boolean shouldRemoveWord(String word, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
@@ -93,9 +100,5 @@ public class CleverGuesser extends Guesser{
                 this.currGuess = letter;
             }
         }
-    }
-
-    public int getType() {
-        return CLEVER;
     }
 }

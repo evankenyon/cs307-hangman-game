@@ -136,9 +136,9 @@ public class HangmanGame {
 
     private void setNewGuess() {
         if(guesser.getType() == Guesser.SIMPLE) {
-            ((SimpleGuesser) guesser).setNewGuess();
+            ((SimpleGuesser) guesser).setCurrGuess();
         } else if(guesser.getType() == Guesser.CLEVER) {
-            ((CleverGuesser) guesser).setNewGuess(incorrectLettersGuessed, correctLettersGuessedSkeleton);
+            ((CleverGuesser) guesser).setCurrGuess(incorrectLettersGuessed, correctLettersGuessedSkeleton);
         }
     }
 
@@ -215,7 +215,7 @@ public class HangmanGame {
     // Record user's input to be used in the game loop
     private void handleKeyInput (KeyCode code) {
         if(guesser.getType() == Guesser.INTERACTIVE) {
-            ((InteractiveGuesser) guesser).setNewGuess(code);
+            ((InteractiveGuesser) guesser).setCurrGuess(code);
         }
     }
 

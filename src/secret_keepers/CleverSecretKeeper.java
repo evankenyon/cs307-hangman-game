@@ -58,6 +58,10 @@ public class CleverSecretKeeper extends SecretKeeper {
         secretWord = possibleWords.get(rand.nextInt(possibleWords.size()));
     }
 
+    /**
+     * Purpose: Get the type of this secret keeper
+     * @return the type of this secret keeper (CLEVER)
+     */
     public int getType() {
         return CLEVER;
     }
