@@ -5,6 +5,7 @@ import runner.Main;
 
 import java.util.List;
 
+// Should make getCurrGuess have all the logic for setting guess as well, don't want hangman class to call setCurrGuess
 /**
  * Purpose: Template for specific implementations of a guesser class, specifically for this project
  * an interactive guesser, a simple guesser, and clever guesser. Contains methods used by all 3 in order
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public abstract class Guesser {
     private int numGuessesLeft;
+    // If already need getters and setters, can make private and use those methods
     protected StringBuilder myLettersLeftToGuess;
     protected String currGuess;
 

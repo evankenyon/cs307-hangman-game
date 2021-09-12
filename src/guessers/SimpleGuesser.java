@@ -19,10 +19,14 @@ public class SimpleGuesser extends Guesser {
      * Purpose: Create a simple guesser that guesses letter by frequency in English words
      */
     public SimpleGuesser() {
+        // only need to call super if there are arguments to pass in
         super();
         currLetterIndex = 0;
     }
 
+
+    // Should make this method abstract in parent class
+    // Probably want to avoid extra, unused parameters
     /**
      * Purpose: Set the current guess to the next most frequent letter
      * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
