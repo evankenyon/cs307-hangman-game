@@ -3,7 +3,10 @@ package hangman;
 import java.util.ArrayList;
 import java.util.List;
 
+import guessers.CleverGuesser;
 import guessers.Guesser;
+import guessers.InteractiveGuesser;
+import guessers.SimpleGuesser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -111,6 +114,12 @@ public class HangmanGame {
      * Purpose (comment borrowed from Prof. Duvall): Play one round of the game.
      */
     public void playGuess () {
+        if(guesser.getType() == Guesser.SIMPLE) {
+            ((SimpleGuesser) guesser).setNewGuess();
+        } else if(guesser.getType() == Guesser.CLEVER) {
+            ((CleverGuesser) guesser).setNewGuess(incorrectLettersGuessed, correctLettersGuessedSkeleton);
+        }
+
         if (guesser.getCurrGuess() == null) {
             return;
         }
@@ -124,7 +133,6 @@ public class HangmanGame {
         else {
             System.out.println("Please enter a single alphabetic letter ...");
         }
-        guesser.setCurrGuess(null, incorrectLettersGuessed, correctLettersGuessedSkeleton);
 
         handleEndOfGame();
     }
@@ -198,7 +206,9 @@ public class HangmanGame {
 
     // Record user's input to be used in the game loop
     private void handleKeyInput (KeyCode code) {
-        guesser.setCurrGuess(code.getChar().toLowerCase(), incorrectLettersGuessed, correctLettersGuessedSkeleton);
+        if(guesser.getType() == Guesser.INTERACTIVE) {
+            ((InteractiveGuesser) guesser).setNewGuess(code);
+        }
     }
 
     private void setCorrectLettersGuessedSkeleton() {

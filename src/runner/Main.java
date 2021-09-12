@@ -55,7 +55,7 @@ public class Main extends Application {
         Guesser simpleGuesser = new SimpleGuesser();
         Guesser cleverGuesser = new CleverGuesser(NUM_LETTERS, gameDictionary);
 
-        HangmanGame game = new HangmanGame(NUM_LETTERS, interactiveGuesser, interactiveSecretKeeper);
+        HangmanGame game = new HangmanGame(NUM_LETTERS, simpleGuesser, interactiveSecretKeeper);
         stage.setScene(game.setupDisplay(BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

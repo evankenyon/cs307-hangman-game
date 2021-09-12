@@ -25,6 +25,13 @@ public abstract class Guesser {
     protected StringBuilder myLettersLeftToGuess;
     protected String currGuess;
 
+    // hall is either current spot being explored or spot determined to be in computed path
+    public static final int CLEVER = 1;
+    // basic hall spot
+    public static final int INTERACTIVE = 2;
+    // hall spot that was visited and discarded
+    public static final int SIMPLE = 3;
+
     /**
      * Purpose: Construct a guesser object that guesses letters in HangmanGame
      * Assumptions: Hangman.ALPHABET is the entire English alphabet in lowercase
@@ -43,18 +50,6 @@ public abstract class Guesser {
     }
 
     /**
-     * Purpose: Sets this guesser's current guess to the currGuess argument
-     * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
-     * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
-     * @param currGuess the letter to set this guesser's current guess to
-     * @param incorrectLettersGuessed only used in CleverGuesser, described in detail there
-     * @param correctLettersGuessedSkeleton only used in CleverGuesser, described in detail there
-     */
-    public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
-        this.currGuess = currGuess;
-    }
-
-    /**
      * Purpose: Get this guesser's number of guesses left before a game over
      * @return this guesser's number of guesses left before a game over
      */
@@ -68,6 +63,8 @@ public abstract class Guesser {
     public void decrementNumGuesses() {
         this.numGuessesLeft -= 1;
     }
+
+    public abstract int getType();
 
     /**
      * Purpose: Get the index of this guesser's current guess in the myLettersLeftToGuess member var

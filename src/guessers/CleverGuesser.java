@@ -36,14 +36,12 @@ public class CleverGuesser extends Guesser{
      * Purpose: Set the current guess for this guesser to guess in the hangman game based on the algorithm linked to above
      * Assumptions: incorrectLettersGuessed is a list of incorrectly guessed letters and correctLettersGuessedSkeleton is
      * the toString of displayWord (from HangmanGame) in List form (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
-     * @param currGuess used for InteractiveGuesser's setCurrGuess function, but not relevant here
      * @param incorrectLettersGuessed incorrectly guessed letters thus far (i.e. none of the possible words to be guessed can have
      *                                these letters, so used to filter that list)
      * @param correctLettersGuessedSkeleton described in assumptions, used to filter possibleWords such that no possible words will
      *                                      have letters that are in the spot of a letter that's already correctly guessed in that spot
      */
-    @Override
-    public void setCurrGuess(String currGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
+    public void setNewGuess(List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         possibleWords.removeIf(word -> shouldRemoveWord(word, incorrectLettersGuessed, correctLettersGuessedSkeleton));
         initializeLetterFrequencyInPossibleWords();
         recordLetterFrequencies();
@@ -95,5 +93,9 @@ public class CleverGuesser extends Guesser{
                 this.currGuess = letter;
             }
         }
+    }
+
+    public int getType() {
+        return CLEVER;
     }
 }

@@ -1,5 +1,7 @@
 package guessers;
 
+import javafx.scene.input.KeyCode;
+
 /**
  * Purpose: Represent an interactive guesser that allows a person to guess letters by inputting them
  * on the keyboard
@@ -17,6 +19,15 @@ public class InteractiveGuesser extends Guesser {
      */
     public InteractiveGuesser() {
         super();
+    }
+
+    public String setNewGuess(KeyCode code) {
+        currGuess = code.getChar().toLowerCase();
+        return currGuess;
+    }
+
+    public int getType() {
+        return INTERACTIVE;
     }
 
 }
