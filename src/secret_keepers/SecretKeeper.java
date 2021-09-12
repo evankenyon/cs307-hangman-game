@@ -15,6 +15,10 @@ import java.util.List;
  * @Author Evan Kenyon
  */
 public abstract class SecretKeeper {
+    public static final int CLEVER = 1;
+    public static final int INTERACTIVE = 2;
+    public static final int SIMPLE = 3;
+
     protected String secretWord;
 
     /**
@@ -25,17 +29,5 @@ public abstract class SecretKeeper {
         return secretWord;
     }
 
-    /**
-     * Purpose: Only used in CleverSecretKeeper. Set a new secret word after each of the guesser's guess
-     * Assumptions: guesserGuess is most recent guesser's guess,incorrectLettersGuessed is a list of incorrectly guessed letters
-     * and correctLettersGuessedSkeleton is the toString of displayWord (from HangmanGame) in List form
-     * (i.e. "___e__" would be ["_", "_", "_", "e", "_", "_"]
-     * @param guesserGuess used for generation of potential patterns and words that fall into those patterns
-     * @param incorrectLettersGuessed cannot have any secret words contain already incorrectly guessed letters
-     * @param correctLettersGuessedSkeleton foundation for generating patterns (i.e. potential patterns can be this pattern
-     *                                      or this pattern with the most recently guessed letter in one or more empty spots)
-     */
-    public void setSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
-    }
-
+    public abstract int getType();
 }

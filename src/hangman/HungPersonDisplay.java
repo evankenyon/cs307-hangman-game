@@ -44,7 +44,6 @@ public class HungPersonDisplay {
     }
 
     public Node getBodyPart(int numGuessesLeft) {
-        System.out.println(numGuessesLeft);
         return guessesToBodyPart.get(numGuessesLeft);
     }
 

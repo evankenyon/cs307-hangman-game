@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import secret_keepers.CleverSecretKeeper;
 import secret_keepers.SecretKeeper;
 import util.DisplayWord;
 import runner.Main;
@@ -114,11 +115,7 @@ public class HangmanGame {
      * Purpose (comment borrowed from Prof. Duvall): Play one round of the game.
      */
     public void playGuess () {
-        if(guesser.getType() == Guesser.SIMPLE) {
-            ((SimpleGuesser) guesser).setNewGuess();
-        } else if(guesser.getType() == Guesser.CLEVER) {
-            ((CleverGuesser) guesser).setNewGuess(incorrectLettersGuessed, correctLettersGuessedSkeleton);
-        }
+        setNewGuess();
 
         if (guesser.getCurrGuess() == null) {
             return;
@@ -135,6 +132,14 @@ public class HangmanGame {
         }
 
         handleEndOfGame();
+    }
+
+    private void setNewGuess() {
+        if(guesser.getType() == Guesser.SIMPLE) {
+            ((SimpleGuesser) guesser).setNewGuess();
+        } else if(guesser.getType() == Guesser.CLEVER) {
+            ((CleverGuesser) guesser).setNewGuess(incorrectLettersGuessed, correctLettersGuessedSkeleton);
+        }
     }
 
     private void handleRecordGuess(int index) {
@@ -171,7 +176,10 @@ public class HangmanGame {
     }
 
     private void checkGuessInSecretWord(int index) {
-        secretKeeper.setSecretWord(guesser.getCurrGuess(), incorrectLettersGuessed, correctLettersGuessedSkeleton);
+        if(secretKeeper.getType() == SecretKeeper.CLEVER) {
+            ((CleverSecretKeeper) secretKeeper).setNewSecretWord(guesser.getCurrGuess(), incorrectLettersGuessed, correctLettersGuessedSkeleton);
+        }
+
         if (! secretKeeper.getSecretWord().contains(guesser.getCurrGuess())) {
             handleIncorrectGuess(index);
             updateHungPerson();

@@ -20,17 +20,15 @@ import java.util.List;
  * @Author Evan Kenyon
  */
 public abstract class Guesser {
+    public static final int CLEVER = 1;
+    public static final int INTERACTIVE = 2;
+    public static final int SIMPLE = 3;
+
     private int numGuessesLeft;
     // If already need getters and setters, can make private and use those methods
     protected StringBuilder myLettersLeftToGuess;
     protected String currGuess;
 
-    // hall is either current spot being explored or spot determined to be in computed path
-    public static final int CLEVER = 1;
-    // basic hall spot
-    public static final int INTERACTIVE = 2;
-    // hall spot that was visited and discarded
-    public static final int SIMPLE = 3;
 
     /**
      * Purpose: Construct a guesser object that guesses letters in HangmanGame

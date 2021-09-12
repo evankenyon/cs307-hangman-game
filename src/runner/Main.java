@@ -48,14 +48,14 @@ public class Main extends Application {
     @Override
     public void start (Stage stage) {
         HangmanDictionary gameDictionary =  new HangmanDictionary(DICTIONARY);
-        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
+//        SecretKeeper interactiveSecretKeeper = new InteractiveSecretKeeper(NUM_LETTERS);
         SecretKeeper simpleSecretKeeper = new SimpleSecretKeeper(gameDictionary, NUM_LETTERS);
         SecretKeeper cleverSecretKeeper = new CleverSecretKeeper(gameDictionary, NUM_LETTERS);
         Guesser interactiveGuesser = new InteractiveGuesser();
         Guesser simpleGuesser = new SimpleGuesser();
         Guesser cleverGuesser = new CleverGuesser(NUM_LETTERS, gameDictionary);
 
-        HangmanGame game = new HangmanGame(NUM_LETTERS, simpleGuesser, interactiveSecretKeeper);
+        HangmanGame game = new HangmanGame(NUM_LETTERS, interactiveGuesser, cleverSecretKeeper);
         stage.setScene(game.setupDisplay(BACKGROUND));
         stage.setTitle(TITLE);
         stage.show();

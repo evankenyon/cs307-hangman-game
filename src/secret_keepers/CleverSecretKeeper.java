@@ -46,8 +46,7 @@ public class CleverSecretKeeper extends SecretKeeper {
      * @param correctLettersGuessedSkeleton foundation for generating patterns (i.e. potential patterns can be this pattern
      *                                      or this pattern with the most recently guessed letter in one or more empty spots)
      */
-    @Override
-    public void setSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
+    public void setNewSecretWord(String guesserGuess, List<String> incorrectLettersGuessed, List<String> correctLettersGuessedSkeleton) {
         for(String letter: incorrectLettersGuessed) {
             possibleWords.removeIf(word -> word.contains(letter));
         }
@@ -57,6 +56,10 @@ public class CleverSecretKeeper extends SecretKeeper {
         // https://www.baeldung.com/java-random-list-element
         Random rand = new Random();
         secretWord = possibleWords.get(rand.nextInt(possibleWords.size()));
+    }
+
+    public int getType() {
+        return CLEVER;
     }
 
     private void initializePatternToWordsMap(String guesserGuess, List<String> correctLettersGuessedSkeleton) {

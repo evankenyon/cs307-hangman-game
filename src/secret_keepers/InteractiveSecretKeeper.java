@@ -25,6 +25,10 @@ public class InteractiveSecretKeeper extends SecretKeeper{
         secretWord = getInput(String.format("Please enter a secret word %d letters long", wordLength), wordLength);
     }
 
+    public int getType() {
+        return INTERACTIVE;
+    }
+
     private String getInput (String prompt, int numCharacters) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setContentText(prompt);

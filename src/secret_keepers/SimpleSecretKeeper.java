@@ -27,4 +27,8 @@ public class SimpleSecretKeeper extends SecretKeeper{
         secretWord = dictionary.getRandomWord(wordLength).toLowerCase();
     }
 
+    public int getType() {
+        return SIMPLE;
+    }
+
 }
