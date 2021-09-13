@@ -30,8 +30,8 @@ Main class: runner/Main.java
 
 Data files needed: None
 
-Key/Mouse inputs: If using interactive guesser, use keyboard to guess letter. If using 
-a different kind of guesser, press any letter on the keyboard to start the game.
+Key/Mouse inputs: If using interactive guesser, use keyboard to guess letters. If using 
+a different kind of guesser, game will start automatically.
 
 Known Bugs: None
 
